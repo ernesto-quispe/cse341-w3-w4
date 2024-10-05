@@ -1,0 +1,55 @@
+GET http://localhost:3000/users HTTP/1.1
+###
+GET http://localhost:3000/users/66ee47f468af90bf696d373f HTTP/1.1
+###
+GET https://cse341-node-sdsc.onrender.com/users/ HTTP/1.1
+###
+GET https://cse341-node-sdsc.onrender.com/users/66ee491e68af90bf696d3740 HTTP/1.1
+###
+PUT http://localhost:3000/users/66ee491e68af90bf696d3740 
+content-type: application/json
+
+{
+    "firstName": "Sophia",
+    "lastName": "Martinez",
+    "email": "sophia.martinez@example.com",
+    "favoriteColor": "Black",
+    "birthday":"1985-05-23"
+}
+###
+POST http://localhost:3000/users/ 
+content-type: application/json
+
+{
+    "firstName": "Josh",
+    "lastName": "Zuca",
+    "email": "josh.zuca@example.com",
+    "favoriteColor": "Black",
+    "birthday":"1972-03-23"
+}
+###
+DELETE  http://localhost:3000/users/66f89a6331c244b04cc8eeb3 HTTP/1.1
+###
+PUT https://cse341-node-sdsc.onrender.com/users/66ee491e68af90bf696d3740 
+content-type: application/json
+
+{
+    "firstName": "Sophia",
+    "lastName": "Martinez",
+    "email": "sophia.martinez@example.com",
+    "favoriteColor": "Black",
+    "birthday":"1985-05-23"
+}
+###
+POST https://cse341-node-sdsc.onrender.com/users/ 
+content-type: application/json
+
+{
+    "firstName": "Josh",
+    "lastName": "Zuca",
+    "email": "josh.zuca@example.com",
+    "favoriteColor": "Black",
+    "birthday":"1972-03-23"
+}
+###
+DELETE  https://cse341-node-sdsc.onrender.com/users/66f89a6331c244b04cc8eeb3 HTTP/1.1

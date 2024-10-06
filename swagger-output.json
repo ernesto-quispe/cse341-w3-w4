@@ -5,10 +5,10 @@
     "description": "Description",
     "version": "1.0.0"
   },
-  "host": "cse341-node-sdsc.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/": {
@@ -24,18 +24,31 @@
         }
       }
     },
+    "/api-docs": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/users/": {
       "get": {
         "tags": [
           "Users"
         ],
-        "description": "",
+        "description": "Retrieve all users from the collection",
         "produces": [
           "application/json"
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -43,36 +56,16 @@
         "tags": [
           "Users"
         ],
-        "description": "",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "Juan"
-                },
-                "lastName": {
-                  "example": "Perez"
-                },
-                "email": {
-                  "example": "juan.perez@gmail.com"
-                },
-                "favoriteColor": {
-                  "example": "White"
-                },
-                "birthday": {
-                  "example": "1973-03-08"
-                }
-              }
-            }
-          }
-        ],
+        "description": "Create a new user",
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -82,7 +75,7 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "description": "Retrieve a single user by their ID",
         "produces": [
           "application/json"
         ],
@@ -97,6 +90,15 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
@@ -104,43 +106,21 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "description": "Update an existing user by their ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "firstName": {
-                  "example": "Juan"
-                },
-                "lastName": {
-                  "example": "Perez"
-                },
-                "email": {
-                  "example": "juan.perez@gmail.com"
-                },
-                "favoriteColor": {
-                  "example": "White"
-                },
-                "birthday": {
-                  "example": "1973-03-08"
-                }
-              }
-            }
-          }          
+          }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
           },
           "404": {
             "description": "Not Found"
@@ -154,19 +134,218 @@
         "tags": [
           "Users"
         ],
-        "description": "",
+        "description": "Delete an existing user by their ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "type": "string",
-            "example": "66ee47f468af90bf696d373f"
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Retrieve all products from the collection",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Create a new product",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "Iphone 16"
+                },
+                "category": {
+                  "example": "Electronics"
+                },
+                "price": {
+                  "example": "1250.99"
+                },
+                "stock": {
+                  "example": "28"
+                },
+                "description": {
+                  "example": "The last model"
+                },
+                "creationDate": {
+                  "example": "2024-09-30"
+                },
+                "available": {
+                  "example": "true"
+                }
+              }
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "get": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Retrieve a single product by its ID",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Update a product by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "Router"
+                },
+                "category": {
+                  "example": "Electronics"
+                },
+                "price": {
+                  "example": "60.99"
+                },
+                "stock": {
+                  "example": "15"
+                },
+                "description": {
+                  "example": "High-performance"
+                },
+                "creationDate": {
+                  "example": "2024-07-15"
+                },
+                "available": {
+                  "example": "true"
+                }
+              }
+            }
+          }  
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Products"
+        ],
+        "description": "Delete a product by its ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }

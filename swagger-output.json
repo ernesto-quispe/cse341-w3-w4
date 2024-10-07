@@ -1,51 +1,106 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "contact",
-    "description": "Description",
+    "title": "API Title",
+    "description": "API Description",
     "version": "1.0.0"
   },
-  "host": "cse341-w3-w4-n36p.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
+  "definitions": {
+    "User": {
+      "type": "object",
+      "required": ["name", "email", "age", "address","registrationDate","active"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "John"
+        },
+        "email": {
+          "type": "string",
+          "example": "John@example.com"
+        },
+        "age": {
+          "type": "integer",
+          "example": 30
+        },
+        "address": {
+          "type": "string",
+          "example": "1234 Main St"
+        },
+        "phone": {
+          "type": "string",
+          "example": "+15555555555"
+        },
+        "registrationDate": {
+          "type": "string",
+          "format": "date",
+          "example": "2024-12-01"
+        },
+        "active": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    },
+    "Product": {
+      "type": "object",
+      "required": ["name", "category", "price", "stock","description","creationDate","available"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Iphone 16"
+        },
+        "category": {
+          "type": "string",
+          "example": "Smart Phone"
+        },
+        "price": {
+          "type": "string",
+          "example": "123.00"
+        },
+        "stock": {
+          "type": "integer",
+          "example": 10
+        },
+        "description": {
+          "type": "string",
+          "example": "Newest Iphone"
+        },
+        "creationDate": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2024-12-01"
+        },
+        "available": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    }
+  },
   "paths": {
-    "/": {
-      "get": {
-        "tags": [
-          "Hello World"
-        ],
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/api-docs": {
-      "get": {
-        "description": "",
-        "responses": {
-          "default": {
-            "description": ""
-          }
-        }
-      }
-    },
     "/users/": {
       "get": {
         "tags": [
-          "Users"
+          "Get Users"
         ],
-        "description": "Retrieve all users from the collection",
+        "description": "Retrieve all users",
         "produces": [
           "application/json"
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -54,9 +109,20 @@
       },
       "post": {
         "tags": [
-          "Users"
+          "Update Users"
         ],
         "description": "Create a new user",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -73,7 +139,7 @@
     "/users/{id}": {
       "get": {
         "tags": [
-          "Users"
+          "Get Users"
         ],
         "description": "Retrieve a single user by their ID",
         "produces": [
@@ -104,7 +170,7 @@
       },
       "put": {
         "tags": [
-          "Users"
+          "Update Users"
         ],
         "description": "Update an existing user by their ID",
         "parameters": [
@@ -113,6 +179,14 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
           }
         ],
         "responses": {
@@ -132,7 +206,7 @@
       },
       "delete": {
         "tags": [
-          "Users"
+          "Update Users"
         ],
         "description": "Delete an existing user by their ID",
         "parameters": [
@@ -162,9 +236,9 @@
     "/products/": {
       "get": {
         "tags": [
-          "Products"
+          "Get Products"
         ],
-        "description": "Retrieve all products from the collection",
+        "description": "",
         "produces": [
           "application/json"
         ],
@@ -179,38 +253,17 @@
       },
       "post": {
         "tags": [
-          "Products"
+          "Update Products"
         ],
         "description": "Create a new product",
         "parameters": [
           {
-            "name": "body",
             "in": "body",
+            "name": "body",
+            "description": "Created user object",
+            "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "Iphone 16"
-                },
-                "category": {
-                  "example": "Electronics"
-                },
-                "price": {
-                  "example": "1250.99"
-                },
-                "stock": {
-                  "example": "28"
-                },
-                "description": {
-                  "example": "The last model"
-                },
-                "creationDate": {
-                  "example": "2024-09-30"
-                },
-                "available": {
-                  "example": "true"
-                }
-              }
+              "$ref": "#/definitions/Product"
             }
           }
         ],
@@ -233,9 +286,9 @@
     "/products/{id}": {
       "get": {
         "tags": [
-          "Products"
+          "Get Products"
         ],
-        "description": "Retrieve a single product by its ID",
+        "description": "",
         "produces": [
           "application/json"
         ],
@@ -264,9 +317,9 @@
       },
       "put": {
         "tags": [
-          "Products"
+          "Update Products"
         ],
-        "description": "Update a product by its ID",
+        "description": "Update an existing product by its ID",
         "parameters": [
           {
             "name": "id",
@@ -275,36 +328,13 @@
             "type": "string"
           },
           {
-            "name": "body",
             "in": "body",
+            "name": "body",
             "required": true,
             "schema": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "example": "Router"
-                },
-                "category": {
-                  "example": "Electronics"
-                },
-                "price": {
-                  "example": "60.99"
-                },
-                "stock": {
-                  "example": "15"
-                },
-                "description": {
-                  "example": "High-performance"
-                },
-                "creationDate": {
-                  "example": "2024-07-15"
-                },
-                "available": {
-                  "example": "true"
-                }
-              }
+              "$ref": "#/definitions/Product"
             }
-          }  
+          }
         ],
         "responses": {
           "204": {
@@ -323,9 +353,9 @@
       },
       "delete": {
         "tags": [
-          "Products"
+          "Update Products"
         ],
-        "description": "Delete a product by its ID",
+        "description": "Delete an existing product by its ID",
         "parameters": [
           {
             "name": "id",
